@@ -8,10 +8,11 @@ def calculate_time_difference(start_time, end_time):
     difference = (time_end - time_start).seconds / 60
     return difference
 
-# Function to convert minutes to hours in round figures
-def convert_minutes_to_hours(minutes):
-    hours = round(minutes / 60)
-    return hours
+# Updated function to convert minutes to hours and minutes
+def convert_minutes_to_hours_and_minutes(minutes):
+    hours = minutes // 60  # Full hours
+    remainder_minutes = minutes % 60  # Remaining minutes
+    return hours, remainder_minutes
 
 # Setting page config to add a title and icon
 st.set_page_config(page_title="TimeCraft - Time Management Tools", page_icon="⏰")
@@ -37,14 +38,14 @@ with tab1:
         st.write(f"The difference is {difference} minutes.")
 
 with tab2:
-    st.subheader("Convert Minutes to Hours")
+    st.subheader("Convert Minutes to Hours and Minutes")
     
     # User input for minutes
-    minutes = st.number_input("Enter minutes", min_value=0, value=60, step=1, key="min")
+    minutes = st.number_input("Enter minutes", min_value=0, value=435, step=1, key="min")
     
-    if st.button("Convert to Hours", key="conv"):
-        hours = convert_minutes_to_hours(minutes)
-        st.write(f"{minutes} minutes is approximately {hours} hours.")
+    if st.button("Convert", key="conv"):
+        hours, remainder_minutes = convert_minutes_to_hours_and_minutes(minutes)
+        st.write(f"{minutes} minutes is approximately {hours} hours and {remainder_minutes} minutes.")
 
 # Adding developer's name
 st.sidebar.markdown("### Developed by Aditya")
