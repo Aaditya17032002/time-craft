@@ -3,10 +3,13 @@ from datetime import datetime
 
 # Function to calculate difference in minutes
 def calculate_time_difference(start_time, end_time):
-    time_start = datetime.strptime(start_time, "%H:%M")
-    time_end = datetime.strptime(end_time, "%H:%M")
-    difference = (time_end - time_start).seconds / 60
-    return difference
+    try:
+        time_start = datetime.strptime(start_time, "%H:%M")
+        time_end = datetime.strptime(end_time, "%H:%M")
+        difference = (time_end - time_start).seconds / 60
+        return difference
+    except ValueError:
+        return "Invalid time format. Please use HH:MM."
 
 # Updated function to convert minutes to hours and minutes
 def convert_minutes_to_hours_and_minutes(minutes):
@@ -26,16 +29,16 @@ tab1, tab2 = st.tabs(["Time Difference Calculator", "Minutes to Hours Converter"
 with tab1:
     st.subheader("Calculate Time Difference")
     
-    # User inputs for time
-    start_time = st.time_input("Start Time", key="start")
-    end_time = st.time_input("End Time", key="end")
+    # User inputs for time as text
+    start_time_str = st.text_input("Start Time (HH:MM)", key="start")
+    end_time_str = st.text_input("End Time (HH:MM)", key="end")
     
     if st.button("Calculate Difference", key="diff"):
-        # Formatting times for the function
-        start_time_str = start_time.strftime("%H:%M")
-        end_time_str = end_time.strftime("%H:%M")
         difference = calculate_time_difference(start_time_str, end_time_str)
-        st.write(f"The difference is {difference} minutes.")
+        if isinstance(difference, str):  # Error message for invalid format
+            st.error(difference)
+        else:
+            st.success(f"The difference is {difference} minutes.")
 
 with tab2:
     st.subheader("Convert Minutes to Hours and Minutes")
