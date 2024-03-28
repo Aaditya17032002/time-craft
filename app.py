@@ -27,8 +27,8 @@ with tab1:
     st.subheader("Calculate Time Difference")
     
     # User inputs for time
-    start_time = st.time_input("Start Time", value=datetime.strptime("09:20", "%H:%M"), key="start")
-    end_time = st.time_input("End Time", value=datetime.strptime("13:05", "%H:%M"), key="end")
+    start_time = st.time_input("Start Time", key="start")
+    end_time = st.time_input("End Time", key="end")
     
     if st.button("Calculate Difference", key="diff"):
         # Formatting times for the function
@@ -41,7 +41,7 @@ with tab2:
     st.subheader("Convert Minutes to Hours and Minutes")
     
     # User input for minutes
-    minutes = st.number_input("Enter minutes", min_value=0, value=435, step=1, key="min")
+    minutes = st.number_input("Enter minutes", min_value=0, step=1, key="min")
     
     if st.button("Convert", key="conv"):
         hours, remainder_minutes = convert_minutes_to_hours_and_minutes(minutes)
@@ -49,5 +49,3 @@ with tab2:
 
 # Adding developer's name
 st.sidebar.markdown("### Developed by Aditya")
-
-# To run the app, save the code in a file (e.g., timecraft_app.py) and use the command `streamlit run timecraft_app.py` in your terminal.
